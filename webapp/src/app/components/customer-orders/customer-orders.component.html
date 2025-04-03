@@ -1,0 +1,48 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">📦 Your Orders</h2>
+
+    <div *ngIf="orders.length > 0; else noOrders">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card p-3 mb-3" *ngFor="let order of orders; let i = index">
+            
+            <!-- ✅ Order ID and Date -->
+            <h6 class="text-secondary">Order ID: <span class="text-dark">{{ order._id }}</span></h6>
+            <p class="text-muted">Date: <strong>{{ order.date | date: 'medium' }}</strong></p>
+            <p>Order Status:{{order.status}}</p>
+            
+            <h4 class="text-primary">Order #{{ i + 1 }}</h4>
+            <p class="text-muted">Total Items: {{ order.items.length }}</p>
+
+            <div class="card-body">
+              <div class="row" *ngFor="let item of order.items">
+                <div class="col-3">
+                  <img [src]="item.product.images[0]" alt="Product Image" class="img-fluid rounded shadow-sm">
+                </div>
+                <div class="col-6">
+                  <h5>{{ item.product.name }}</h5>
+                  
+                  <!-- ✅ Original Price Strike-through + Discounted Price -->
+                  <p class="text-muted">
+                    <span class="text-decoration-line-through text-danger">₹{{ item.product.price }}</span>  
+                    <strong class="text-success ms-2">₹{{ getSellingPrice(item.product) }}</strong>
+                    <span class="badge bg-warning text-dark ms-2">{{ item.product.discount }}% OFF</span>
+                  </p>
+
+                  <p>Quantity: <strong>{{ item.quantity }}</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Orders Message -->
+    <ng-template #noOrders>
+      <div class="text-center">
+        <h4>No Orders Found! 📦</h4>
+        <button class="btn btn-primary mt-3" routerLink="/products">Shop Now</button>
+      </div>
+    </ng-template>
+</div>

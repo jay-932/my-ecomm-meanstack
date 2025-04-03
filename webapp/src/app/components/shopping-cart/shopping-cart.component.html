@@ -1,0 +1,102 @@
+<div class="container mt-4">
+
+    @if(orderStep==0){
+
+
+    <h2 class="text-center mb-4">🛒 Your Shopping Cart</h2>
+  
+    <div *ngIf="cartItems.length > 0; else emptyCart">
+      <div class="row">
+        <!-- Cart Items Section -->
+        <div class="col-md-8">
+          <div class="card p-3 mb-3" *ngFor="let item of cartItems">
+            <div class="row g-3 align-items-center">
+              <div class="col-4 col-md-3">
+                <img [src]="item.product.images[0]" alt="Product Image" class="img-fluid rounded shadow-sm">
+              </div>
+              <div class="col-8 col-md-6">
+                <h5>{{ item.product.name }}</h5>
+                <p class="text-muted">Price: ₹{{ item.product.price }}</p>
+                <div class="d-flex align-items-center">
+                  <button class="btn btn-sm btn-outline-secondary me-2" (click)="updateQuantity(item, -1)">-</button>
+                  <span class="fw-bold mx-2">{{ item.quantity }}</span>
+                  <button class="btn btn-sm btn-outline-secondary ms-2" (click)="updateQuantity(item, 1)">+</button>
+                </div>
+              </div>
+              <div class="col-12 col-md-3 text-md-end">
+                <button class="btn btn-danger btn-sm" (click)="removeFromCart(item.product._id)">
+                  <i class="bi bi-trash"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Order Summary Section -->
+        <div class="col-md-4">
+          <div class="card p-3 shadow-sm">
+            <h4>Order Summary</h4>
+            <p>Total Items: <strong>{{ totalItems }}</strong></p>
+            <p>Total Price: <strong>₹{{ totalPrice }}</strong></p>
+            <button (click)="checkout()" class="btn btn-primary w-100">Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Empty Cart Message -->
+    <ng-template #emptyCart>
+      <div class="text-center">
+        <h4>Your cart is empty! 🛒</h4>
+        <button class="btn btn-primary mt-3" routerLink="/products">Shop Now</button>
+      </div>
+    </ng-template>
+
+}@else if (orderStep==1){
+    <h2 class="text-center mb-4">Your Order Address</h2>
+
+    <form [formGroup]="addressForm"  class="d-grid gap-3">
+        
+        <!-- Name -->
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Address1</mat-label>
+          <input matInput formControlName="address1" type="text" placeholder="Enter your address" autocomplete="off">
+        </mat-form-field>
+  
+        <!-- Email -->
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Address2</mat-label>
+            <input matInput formControlName="address2" type="text" placeholder="Enter your address2" autocomplete="off">
+          </mat-form-field>
+  
+        <!-- Password -->
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" type="text" placeholder="Enter your city" autocomplete="off">
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>PinCode</mat-label>
+            <input matInput formControlName="pincode" type="text" placeholder="Enter your pincode" autocomplete="off">
+          </mat-form-field>
+        <!-- Submit Button -->
+        <button (click)="addAddress()" mat-raised-button color="primary" class="btn btn-primary full-width">
+         Continue
+        </button>
+  
+      </form>
+
+}@else if (orderStep == 2){
+    <h2 class="text-center mb-4">Select Payment Method</h2>
+    <div class="px-30 shadow">
+        <mat-radio-group [(ngModel)]="paymentType">
+            <mat-radio-button value="cash">Cash</mat-radio-button>
+            <mat-radio-button value="card" [disabled]="true">Card</mat-radio-button>
+          </mat-radio-group>
+
+          <button (click)="completeOrder()" class="btn btn-primary w-100">Continue</button>
+          
+    </div>
+}
+  </div>
+  

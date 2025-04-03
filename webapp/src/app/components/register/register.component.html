@@ -1,0 +1,33 @@
+<div class="container min-vh-100 d-flex justify-content-center align-items-center mt-5">
+    <div class="card shadow-lg p-4 form-container">
+      <h2 class="text-center mb-4">Register</h2>
+  
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="d-grid gap-3">
+        
+        <!-- Name -->
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="text" placeholder="Enter your name" autocomplete="off">
+        </mat-form-field>
+  
+        <!-- Email -->
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email" autocomplete="off">
+        </mat-form-field>
+  
+        <!-- Password -->
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Enter your password" autocomplete="new-password">
+        </mat-form-field>
+  
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" class="btn btn-primary full-width">
+          Register
+        </button>
+  
+      </form>
+    </div>
+  </div>
+  

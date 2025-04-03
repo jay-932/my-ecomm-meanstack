@@ -1,0 +1,28 @@
+<div class="container min-vh-100 d-flex justify-content-center align-items-center mt-5">
+    <div class="card shadow-lg p-4 form-container">
+      <h2 class="text-center mb-4">Login</h2>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-grid gap-3">
+        
+        <!-- Email -->
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Enter your email" autocomplete="off">
+        </mat-form-field>
+  
+        <!-- Password -->
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Enter your password" autocomplete="new-password">
+        </mat-form-field>
+  
+        <!-- Submit Button (Disabled until valid input) -->
+        <button mat-raised-button color="primary" class="btn btn-primary full-width"
+          [disabled]="loginForm.invalid">
+          Login
+        </button>
+  
+      </form>
+    </div>
+  </div>
+  

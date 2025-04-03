@@ -1,0 +1,67 @@
+<header class="header">
+  <!-- Top Section: Logo, Search Bar, Profile Link -->
+  <div class="header-top">
+    <div class="logo" routerLink="/">My E-Commerce-Website (Jay Singh)</div>
+
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="Search products..." 
+        [(ngModel)]="searchQuery" 
+        (keyup.enter)="onSearch($event)" 
+      />
+      <mat-icon class="search-icon" (click)="onSearch()">search</mat-icon>
+    </div>
+
+    <div class="profile">
+      <!-- Admin check -->
+      <span *ngIf="authService.isAdmin; else userTemplate" routerLink="/admin">{{ authService.userName }}</span>
+      <ng-template #userTemplate>
+        <span>{{ authService.userName }}</span>
+      </ng-template>
+
+      @if(!authService.isAdmin){
+      <!-- Wishlist icon -->
+      <ng-container *ngIf="authService.isLoggedIn">
+        <a routerLink="/wishlists" class="icon-link">
+          <mat-icon class="wishlist-icon">favorite</mat-icon>
+        </a>
+      </ng-container>
+
+      <!-- Shopping cart icon -->
+      <ng-container *ngIf="authService.isLoggedIn">
+        <a routerLink="/cart" class="icon-link">
+          <mat-icon class="cart-icon">shopping_cart</mat-icon>
+        </a>
+      </ng-container>
+
+      <!-- Orders Link -->
+      <ng-container *ngIf="authService.isLoggedIn">
+        <a routerLink="/orders" class="orders-link">Orders</a>
+      </ng-container>
+    }
+
+      <!-- Login/Logout -->
+      <ng-container *ngIf="authService.isLoggedIn; else loggedOut">
+        <a (click)="logout()" class="logout-btn">Logout</a>
+      </ng-container>
+
+      <ng-template #loggedOut>
+        <div class="auth-links">
+          <a routerLink="/login">Log In</a>
+          <span class="separator">|</span>
+          <a routerLink="/register">Register</a>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Bottom Section: Category List -->
+  <nav class="category-menu">
+    <ul>
+      <li *ngFor="let category of categoryList" (click)="searchCategory(category._id ?? '')">
+        <a>{{ category.name }}</a>
+      </li>
+    </ul>
+  </nav>
+</header>
