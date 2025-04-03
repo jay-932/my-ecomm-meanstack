@@ -42,5 +42,5 @@ connectDb().catch((err=>{
 }))
 
 app.listen(port,()=>{
-    console.log('server running on port',port)
+    console.log('Server Running on port',port)
 })
