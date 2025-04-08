@@ -1,33 +1,41 @@
 <div class="container min-vh-100 d-flex justify-content-center align-items-center mt-5">
-    <div class="card shadow-lg p-4 form-container">
-      <h2 class="text-center mb-4">Register</h2>
-  
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="d-grid gap-3">
-        
-        <!-- Name -->
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" type="text" placeholder="Enter your name" autocomplete="off">
-        </mat-form-field>
-  
-        <!-- Email -->
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="Enter your email" autocomplete="off">
-        </mat-form-field>
-  
-        <!-- Password -->
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Enter your password" autocomplete="new-password">
-        </mat-form-field>
-  
-        <!-- Submit Button -->
-        <button mat-raised-button color="primary" class="btn btn-primary full-width">
-          Register
+  <div class="card shadow-lg p-4 form-container">
+    <h2 class="text-center mb-4">Register</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="d-grid gap-3">
+      
+      <!-- Name -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" type="text" placeholder="Enter your name" autocomplete="off">
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Enter your email" autocomplete="off">
+      </mat-form-field>
+
+      <!-- Password (With Eye Icon) -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" 
+               placeholder="Enter your password" autocomplete="new-password">
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
-  
-      </form>
-    </div>
+      </mat-form-field>
+
+      <!-- Submit Button -->
+      <button mat-raised-button color="primary" class="btn btn-primary full-width">
+        Register
+      </button>
+
+      <!-- Login Link -->
+      <div class="text-center mt-3">
+        <p>Already Registered? <a (click)="goToLogin()" class="login-link">Login Here</a></p>
+      </div>
+
+    </form>
   </div>
-  
+</div>

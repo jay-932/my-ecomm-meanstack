@@ -72,6 +72,12 @@
       <div class="d-flex gap-3">
         <button mat-raised-button color="primary" [disabled]="page === 1" (click)="pageChange(page - 1)">Previous</button>
         <button mat-raised-button color="primary" (click)="pageChange(page + 1)" [disabled]="!isNext">Next</button>
+         <!-- ✅ Back Button -->
+    
+      <a [routerLink]="'/'" class="btn btn-outline-primary">
+        🏠 Back to Home
+      </a>
+   
       </div>
     </div>
     

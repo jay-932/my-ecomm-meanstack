@@ -1,11 +1,23 @@
-const mongoose =require("mongoose");
+const mongoose = require("mongoose");
+
 const orderSchema = new mongoose.Schema({
-    userId: { type:mongoose.Schema.Types.ObjectId, ref: 'users' },
-    date:Date,
-    items:Array(mongoose.Schema.Types.Mixed),
-    paymentType:String,
-    address:mongoose.Schema.Types.Mixed,
-    status:String,
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
+  date: { type: Date, default: Date.now },
+  items: [
+    {
+      product: { type: mongoose.Schema.Types.ObjectId, ref: "products" },
+      quantity: { type: Number, default: 1 }
+    }
+  ],
+  paymentType: String,
+  address: {
+    address1: { type: String },
+    city: { type: String },
+    pincode: { type: String }
+  },
+  status: { type: String },
+  cancelReason: { type: String }
 });
-const Order=mongoose.model("orders", orderSchema);
+
+const Order = mongoose.model("orders", orderSchema);
 module.exports = Order;

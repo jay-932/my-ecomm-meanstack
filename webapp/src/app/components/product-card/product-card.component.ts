@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BuyNowComponent } from '../buy-now/buy-now.component';
 
 @Component({
   selector: 'app-product-card',
@@ -16,8 +18,10 @@ import { CartService } from '../../services/cart.service';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
+
   wishlistService = inject(WishlistService);
   cartService = inject(CartService);
+  dialog = inject(MatDialog);
 
   constructor() {
     this.cartService.init();
@@ -66,5 +70,12 @@ export class ProductCardComponent {
 
   isProductInCart(productId: string): boolean {
     return this.cartService.items.some(x => x.product._id === productId);
+  }
+
+  openBuyNowModal(product: Product) {
+    this.dialog.open(BuyNowComponent, {
+      width: '400px',
+      data: product
+    });
   }
 }

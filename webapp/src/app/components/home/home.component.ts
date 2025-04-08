@@ -9,11 +9,13 @@ import { MatIcon } from '@angular/material/icon';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { BuyNowComponent } from '../buy-now/buy-now.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatCardModule, CarouselModule,RouterLink, MatIcon,ProductCardComponent],
+  imports: [CommonModule, MatCardModule, CarouselModule, RouterLink, MatIcon, ProductCardComponent, MatDialogModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -28,7 +30,6 @@ export class HomeComponent implements OnInit {
     navText: ['', ''],
     nav: true,
     autoplay: true,
-   
   };
 
   customerService = inject(CustomerService);
@@ -36,13 +37,14 @@ export class HomeComponent implements OnInit {
   featuredProducts: Product[] = [];
   bannerImages: Product[] = [];
   wishlistService = inject(WishlistService);
-  cartService = inject(CartService)
+  cartService = inject(CartService);
+  dialog = inject(MatDialog);
 
   ngOnInit() {
     this.customerService.getFeaturedProducts().subscribe((result) => {
       if (result?.length) {
         this.featuredProducts = result;
-        this.bannerImages.push(...result); // ✅ Ensure bannerImages has data
+        this.bannerImages.push(...result);
       }
     });
 
@@ -51,17 +53,17 @@ export class HomeComponent implements OnInit {
         this.newProducts = result;
         this.bannerImages.push(...result);
       }
-      // this.wishlistService.init();
-      // this.cartService.init();
     });
   }
 
- 
-
-  // ✅ Fix for `trackBy` issue
   trackByIndex(index: number, item: Product): string {
     return item._id ? item._id + '-' + index : `item-${index}`;
   }
-  
-  
+
+  openBuyNowModal(product: Product) {
+    this.dialog.open(BuyNowComponent, {
+      width: '400px',
+      data: product
+    });
+  }
 }

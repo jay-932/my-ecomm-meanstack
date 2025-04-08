@@ -2,20 +2,31 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';  // ✅ Import MatIconModule
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [ MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    CommonModule,], // ✅ Added MatIconModule
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  private authService = inject(AuthService); // ✅ AuthService Injected
-  private router = inject(Router); // ✅ Router Injected
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  hidePassword = true;
+  error: string = '';    
+  
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -36,28 +47,33 @@ export class LoginComponent {
       next: (response: any) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
-  
-        console.log("User Logged In:", response);
+
         alert("Login Successful!");
         this.loginForm.reset(); 
   
-        // ✅ Use `isAdmin` instead of `role`
         if (response.user.isAdmin) {
-          console.log("✅ Redirecting to Admin Dashboard");
-          this.router.navigateByUrl('/admin'); // Admin page
+          this.router.navigateByUrl('/admin'); 
         } else {
-          console.log("✅ Redirecting to Home Page");
-          this.router.navigateByUrl('/home'); // Normal user page
+          this.router.navigateByUrl('/home'); 
         }
       },
       error: (error) => {
-        console.error("Login Failed:", error);
         alert(error.error?.message || "Login Failed! Please try again.");
-      },
-      complete: () => {
-        console.log("Login API Call Completed.");
       }
     });
   }
-  
+
+  // ✅ Toggle Password Visibility
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
+
+  // ✅ Navigate to Register Page
+  goToRegister() {
+    this.router.navigateByUrl('/register');
+  }
+
+  goToForgotPassword() {
+    this.router.navigateByUrl('/forgot-password');
+  }
+}

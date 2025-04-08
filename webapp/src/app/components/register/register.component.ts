@@ -2,20 +2,22 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';  // ✅ Import MatIconModule
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule], // ✅ Added MatIconModule
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  private authService = inject(AuthService); // ✅ AuthService Injected
-  private router = inject(Router); // ✅ Router Injected
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  hidePassword = true; // ✅ Control Password Visibility
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -35,18 +37,23 @@ export class RegisterComponent {
 
     this.authService.register(name, email, password).subscribe({
       next: (response) => {
-        console.log("Registered User:", response);
         alert("User Registered Successfully!");
-        this.registerForm.reset(); // ✅ Form reset after successful registration
+        this.registerForm.reset(); 
         this.router.navigateByUrl('/login'); // ✅ Redirect to login page
       },
       error: (error) => {
-        console.error("Registration Failed:", error);
-        alert(error.error?.message || "Registration Failed! Please try again."); // ✅ Show proper error message
-      },
-      complete: () => {
-        console.log("Registration API Call Completed.");
+        alert(error.error?.message || "Registration Failed! Please try again.");
       }
     });
+  }
+
+  // ✅ Toggle Password Visibility
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  // ✅ Navigate to Login Page
+  goToLogin() {
+    this.router.navigateByUrl('/login');
   }
 }

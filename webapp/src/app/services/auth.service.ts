@@ -6,112 +6,59 @@ import { inject, Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:3000/auth'; // ✅ Ensure this is correct
+  private baseUrl = 'http://localhost:3000/auth'; // ✅ Backend API URL
+  http = inject(HttpClient);
 
   constructor() {}
-  http = inject(HttpClient);
-  //ye api teen tareeke se karenge 
 
-  //1-ye direct object pass karke hai 
-
-  // public register(data: any) {
-  //   let headers = new HttpHeaders();
-  //   headers.append('Content-Type', 'application/json');
-
-  //   return this.http.post(this.baseUrl + '/register', data, {
-  //     headers: headers,
-  //   });
-  // }
-
-  //2-Properly Defined API Call → name, email, password ko explicitly method parameters me define karna
+  // Register API
   public register(name: string, email: string, password: string) {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-  
-    const data = { name, email, password }; 
-  
-    return this.http.post(this.baseUrl + '/register', data, {
-      headers: headers,
+    const data = { name, email, password };
+    return this.http.post(this.baseUrl + '/register', data, { headers });
+  }
+
+  // Login API
+  public login(email: string, password: string) {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    const data = { email, password };
+    return this.http.post(this.baseUrl + '/login', data, { headers });
+  }
+
+  // Check login status
+  get isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
+
+  // Check admin status
+  get isAdmin() {
+    let userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData).isAdmin : null;
+  }
+
+  // Get username
+  get userName() {
+    let userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData).name : null;
+  }
+
+  // Logout
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+
+  // Forgot password
+  forgotPassword(email: string) {
+    return this.http.post(this.baseUrl + '/forgot-password', { email });
+  }
+
+  // ✅ Fixed: Reset password with token in URL
+  resetPassword(token: string, newPassword: string) {
+    return this.http.post(`${this.baseUrl}/reset-password/${token}`, {
+      password: newPassword
     });
   }
-
- 
-
-  //-3
-//   import { HttpClient } from '@angular/common/http';
-// import { inject, Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthService {
-
-//   private baseUrl = 'http://localhost:3000/auth';
-//   http = inject(HttpClient);
-
-//   constructor() {}
-
-//   register(name: string, email: string, password: string) {
-//     return this.http.post(this.baseUrl + '/register', {
-//       name, 
-//       email, 
-//       password
-//     });
-//   }
-// }
-
-public login(email: string, password: string) {
-  let headers = new HttpHeaders();
-  headers.append('Content-Type', 'application/json');
-
-  const data = { email, password }; 
-
-  return this.http.post(this.baseUrl + '/login', data, {
-    headers: headers,
-  });
-}
-
-//isko aise bhi kar sakte hai 
-//headers.append('Content-Type', 'application/json'); Ka Matlab Kya Hai?
-//Yeh HTTP request headers ka ek part hai jo server ko batata hai ki jo data hum bhej rahe hain, woh JSON format me hai.
-
-//Agar aap API request kar rahe hain, to server ko batana padta hai ki request ka content kis format me hai.
-
-// public login(email: string, password: string) {
-//   let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); // ✅ Correct Way
-
-//   const data = { email, password }; 
-
-//   return this.http.post(this.baseUrl + '/login', data, { headers });
-// }
-get isLoggedIn(){
-  let token = localStorage.getItem('token');
-  if(token){
-    return true
-  }
-  return false
-}
-
-get isAdmin(){
-  let userData = localStorage.getItem('user');
-  if(userData){
-    return JSON.parse(userData).isAdmin;
-  }
-  return null
-}
-
-get userName(){
-  let userData = localStorage.getItem('user');
-  if(userData){
-    return JSON.parse(userData).name;
-  }
-  return null
-}
-
-logout(){
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-
-}
-  
 }

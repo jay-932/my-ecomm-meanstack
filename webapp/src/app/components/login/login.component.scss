@@ -27,4 +27,25 @@
     display: grid;
     gap: 16px;
   }
+  .toast-success {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    font-weight: bold;
+  }
+  
+  .toast-error {
+    background-color: #f44336 !important;
+    color: white !important;
+    font-weight: bold;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  a {
+    cursor: pointer;
+  }
+  
+  
   

@@ -18,6 +18,9 @@ import { WishlistsComponent } from './components/wishlists/wishlists.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CustomerOrdersComponent } from './components/customer-orders/customer-orders.component';
 import { OrdersComponent } from './components/manage/orders/orders.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { BuyNowComponent } from './components/buy-now/buy-now.component';
 
 export const routes: Routes = [
   // ✅ Default Route (Redirect to Home)
@@ -55,6 +58,12 @@ export const routes: Routes = [
   { path: 'wishlists', component: WishlistsComponent, canActivate: [authGuard] },
   { path: 'cart', component: ShoppingCartComponent, canActivate: [authGuard] },
   { path: 'orders', component: CustomerOrdersComponent, canActivate: [authGuard] },
+
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+{ path: 'reset-password/:token', component: ResetPasswordComponent },
+
+{ path: 'buy-now/:id', component: BuyNowComponent },
+
 
   // ✅ Authentication Routes
   { path: 'register', component: RegisterComponent },
