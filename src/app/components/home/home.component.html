@@ -1,0 +1,41 @@
+<div class="container py-4">
+  <!-- ✅ Carousel -->
+  <div *ngIf="bannerImages?.length">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let item of bannerImages; let i = index; trackBy: trackByIndex">
+        <ng-template carouselSlide>
+          <a [routerLink]="'/product/' + item._id" class="flex flex-col items-center no-underline">
+            <img [src]="item.images?.[0]" alt="Banner Image {{ i }}" class="w-full carousel-image">
+            <span class="text-black font-semibold text-lg mt-2 text-center w-full">
+              {{ item.name }}
+            </span>
+          </a>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+
+  <!-- ✅ Featured Products -->
+  <div class="my-8 p-4 border rounded-2xl shadow-sm bg-white">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">✨ Featured Products</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let product of featuredProducts">
+        <a [routerLink]="'/product/' + product._id" class="no-underline">
+          <app-product-card [product]="product"></app-product-card>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ New Products -->
+  <div class="my-8 p-4 border rounded-2xl shadow-sm bg-white">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">🆕 New Products</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let product of newProducts">
+        <a [routerLink]="'/product/' + product._id" class="no-underline">
+          <app-product-card [product]="product"></app-product-card>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

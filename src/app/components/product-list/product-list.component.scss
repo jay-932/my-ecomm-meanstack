@@ -1,0 +1,63 @@
+.container-fluid {
+    .mat-form-field {
+      width: 100%;
+    }
+  
+    .product-card {
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      padding-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  
+      &:hover {
+        transform: scale(1.05);
+      }
+  
+      .product-img {
+        width: 100%;
+        height: 180px; /* ✅ Fixed height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain; /* ✅ Ensures full image is visible */
+        }
+      }
+  
+      .product-name {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+  
+      .product-desc {
+        font-size: 0.9rem;
+        color: gray;
+      }
+  
+      .product-price {
+        color: #ff5722;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+  
+      mat-card-actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+      }
+    }
+  }
+  
+  .category-menu{
+    color: #000; // ✅ ब्लैक टेक्स्ट
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+  }

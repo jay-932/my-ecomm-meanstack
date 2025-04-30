@@ -1,0 +1,22 @@
+.container {
+  background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+  padding: 2rem;
+}
+
+.form-container {
+  background-color: white;
+  border-radius: 1.5rem;
+}
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+button[mat-raised-button] {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

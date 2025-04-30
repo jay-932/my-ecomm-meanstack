@@ -1,0 +1,64 @@
+.card {
+  border-radius: 10px;
+  padding: 1rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+}
+
+.card h4, .card h5 {
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.card-body {
+  padding: 0.5rem 0 0.5rem 0;
+}
+
+img {
+  max-width: 70px;
+  border-radius: 6px;
+}
+
+textarea.form-control {
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+}
+
+.cancel-form {
+  background-color: #f8f9fa;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.order-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.order-status {
+  font-size: 0.8rem;
+  padding: 6px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-status {
+  text-transform: capitalize;
+}
+
+

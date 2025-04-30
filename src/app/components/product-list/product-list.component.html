@@ -1,0 +1,85 @@
+<div class="container-fluid px-4 py-3">
+  <div class="row">
+    
+    <!-- Filters Section -->
+    <div class="col-md-3">
+      <h2 class="mb-3">Filters</h2>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="categoryId" (selectionChange)="getProducts()">
+          <mat-option *ngFor="let item of categories" [value]="item._id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mt-3">
+        <mat-label>Brands</mat-label>
+        <mat-select [(ngModel)]="brandId" (selectionChange)="getProducts()">
+          <mat-option *ngFor="let item of brands" [value]="item._id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Products Section -->
+    <div class="col-md-9">
+      <!-- Sorting (Right Corner) -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Products</h2>
+        
+        <mat-form-field class="w-25" appearance="outline" style="min-width: 200px;">
+          <mat-label>Order By</mat-label>
+          <mat-select [(ngModel)]="sortOrder" (selectionChange)="orderChange($event)">
+            <mat-option [value]="1">Price Low to High</mat-option>
+            <mat-option [value]="-1">Price High to Low</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let product of products">
+          <!-- ✅ Product Clickable -->
+          <a [routerLink]="'/product/' + product._id" class="no-underline">
+            <mat-card class="product-card shadow-sm">
+              <div class="product-img">
+                <img mat-card-image [src]="product.images?.[0] || 'https://via.placeholder.com/150'" alt="{{ product.name }}">
+              </div>
+
+              <mat-card-content>
+                <h6 class="product-name">{{ product.name }}</h6>
+                <p class="product-desc">{{ product.shortDescription }}</p>
+                <p class="product-price">₹{{ product.price }}</p>
+              </mat-card-content>
+
+              <mat-card-actions align="end">
+                <button mat-raised-button color="accent">Buy Now</button>
+              </mat-card-actions>
+            </mat-card>
+          </a>
+        </div>
+
+        <div class="col-12 text-center" *ngIf="products.length === 0">
+          <h6>No Products found</h6>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination (Bottom) -->
+    <div class="d-flex justify-content-end align-items-center mt-4">
+      <div class="d-flex gap-3">
+        <button mat-raised-button color="primary" [disabled]="page === 1" (click)="pageChange(page - 1)">Previous</button>
+        <button mat-raised-button color="primary" (click)="pageChange(page + 1)" [disabled]="!isNext">Next</button>
+         <!-- ✅ Back Button -->
+    
+      <a [routerLink]="'/'" class="btn btn-outline-primary">
+        🏠 Back to Home
+      </a>
+   
+      </div>
+    </div>
+    
+  </div>
+</div>

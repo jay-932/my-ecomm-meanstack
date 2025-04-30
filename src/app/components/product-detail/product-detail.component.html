@@ -1,0 +1,162 @@
+<!-- Loader Template -->
+<ng-template #loadingTemplate>
+  <div class="text-center my-5">
+    <mat-icon class="text-warning" style="font-size: 48px;">hourglass_empty</mat-icon>
+    <p class="mt-2 fs-5">Loading product details...</p>
+  </div>
+</ng-template>
+
+<!-- Product Container -->
+<div class="container mt-4 product-container" *ngIf="!loading && product; else loadingTemplate">
+  <div class="row">
+    <!-- Product Gallery (Left Side) -->
+    <div class="col-md-5">
+      <div class="main-image">
+        <img [src]="selectedImage" class="img-fluid rounded shadow" alt="Product Image">
+      </div>
+      <div class="thumbnail-images d-flex mt-3">
+        <img *ngFor="let img of product.images" [src]="img" class="thumbnail rounded mx-1 shadow-sm"
+             [class.active]="img === selectedImage" (click)="selectImage(img)" alt="Product Thumbnail">
+      </div>
+    </div>
+
+    <!-- Product Details (Right Side) -->
+    <div class="col-md-7">
+      <h2 class="product-title">
+        <mat-icon>shopping_bag</mat-icon> {{ product.name }}
+      </h2>
+      <p class="text-muted">
+        <mat-icon>description</mat-icon> {{ product.shortDescription }}
+      </p>
+
+      <!-- Price with Discount -->
+      <h4 class="text-primary price">
+        <mat-icon>currency_rupee</mat-icon>
+        <span *ngIf="product.discount > 0" class="original-price">{{ product.price }}</span>
+        <span class="discounted-price">₹{{ SellingPrice }}</span>
+      </h4>
+      <span class="text-xs text-danger discount" *ngIf="product.discount > 0">
+        {{ product.discount }}% OFF
+      </span>
+
+      <p>
+        <strong><mat-icon>inventory</mat-icon> Availability:</strong>
+        <span class="text-success" *ngIf="product.isNewProducts">New Arrival</span>
+        <span class="text-warning" *ngIf="!product.isNewProducts">Limited Stock</span>
+      </p>
+
+      <!-- Quantity & Add to Cart -->
+      <div class="d-flex align-items-center mt-3">
+        <mat-form-field appearance="outline" class="me-3">
+          <mat-label><mat-icon>format_list_numbered</mat-icon> Quantity</mat-label>
+          <input matInput type="number" [(ngModel)]="quantity" min="1">
+        </mat-form-field>
+
+        <div class="button-group">
+          <button mat-fab class="icon-button favorite-btn" (click)="addToWishList(product)" aria-label="Add to Wishlist">
+            <div class="icon-container">
+              <mat-icon>{{ isInWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
+              <span class="wishlist-text">{{ isInWishlist(product) ? 'Remove from Wishlist' : 'Add to Wishlist' }}</span>
+            </div>
+          </button>
+          <button mat-fab class="icon-button cart-btn" (click)="addToCart($event, product)" aria-label="Add to Cart">
+            @if (isProductInCart(product._id!)) {
+              <mat-icon>remove_shopping_cart</mat-icon>
+            } @else {
+              <mat-icon>add_shopping_cart</mat-icon>
+            }
+          </button>
+        </div>
+      </div>
+
+      <!-- Category & Brand -->
+      <p class="mt-3">
+        <strong><mat-icon>category</mat-icon> Category:</strong> {{ product.categoryId }}
+      </p>
+      <p>
+        <strong><mat-icon>branding_watermark</mat-icon> Brand:</strong> {{ product.brandId }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Product Description Section -->
+  <div class="mt-5">
+    <h3 class="d-flex align-items-center fw-bold">
+      <mat-icon class="me-2 text-primary">info</mat-icon> Product Description:
+    </h3>
+    <p class="mt-2">{{ product.description }}</p>
+  </div>
+
+  <!-- Similar Products Section -->
+  <div *ngIf="similarProducts.length > 0">
+    <h4 class="section-title">Similar Products</h4>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of similarProducts">
+        <a [routerLink]="'/product/' + product._id" class="no-underline">
+          <app-product-card [product]="product"></app-product-card>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="mt-4 review-section">
+    <h4 class="mb-3">Product Reviews</h4>
+    <div *ngIf="reviews.length > 0; else noReviews">
+      <div *ngFor="let review of reviews" class="p-2 mb-2 border rounded bg-light shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="mb-1">
+            <strong>{{ review.user?.name || 'Anonymous' }}</strong>
+            <span class="text-warning ms-2">
+              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                <mat-icon color="warn">
+                  {{ star <= review.rating ? 'star' : 'star_border' }}
+                </mat-icon>
+              </ng-container>
+            </span>
+          </p>
+          <!-- Delete review (Admin only) -->
+          <button *ngIf="isAdmin" mat-icon-button color="warn" (click)="deleteReview(review._id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <p class="mb-0">{{ review.comment }}</p>
+      </div>
+    </div>
+    <ng-template #noReviews>
+      <p class="text-muted">No reviews yet. Be the first one!</p>
+    </ng-template>
+  </div>
+
+  <!-- Write a Review Section -->
+  <div class="mt-3 write-review">
+    <h4 class="mb-2">Write a Review</h4>
+    <div class="mb-2 d-flex align-items-center">
+      <label class="me-2 fw-semibold">Your Rating:</label>
+      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+        <mat-icon 
+          class="cursor-pointer"
+          [color]="star <= reviewRating ? 'warn' : ''"
+          (click)="reviewRating = star">
+          {{ star <= reviewRating ? 'star' : 'star_border' }}
+        </mat-icon>
+      </ng-container>
+
+      
+    </div>
+
+    <textarea class="form-control" rows="3" [(ngModel)]="reviewText" placeholder="Write your review here..."></textarea>
+
+    <button mat-raised-button color="accent" class="submit-review mt-2" (click)="submitReview()">
+      Submit Review
+    </button>
+  </div>
+
+ 
+ <!-- Back to Home -->
+<div class="text-center mt-5">
+  <a routerLink="/" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+    🏠 Back to Home
+  </a>
+</div>
+</div>

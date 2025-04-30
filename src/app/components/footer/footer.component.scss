@@ -1,0 +1,92 @@
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 0; // ✅ Minimum height
+
+  h1 {
+    font-size: 18px; // ✅ छोटा किया
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 12px; // ✅ Compact headings
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: #bbb;
+    font-size: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 4px;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 11px; // ✅ Text छोटा किया
+        transition: color 0.3s;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 5px; // ✅ Space कम किया
+    font-size: 12px; // ✅ Icons छोटे किए
+
+    a {
+      color: var(--primary-color);
+      transition: color 0.3s;
+
+      &:hover {
+        color: #ffcc00;
+      }
+    }
+  }
+
+  .payment-icons {
+    display: flex;
+    gap: 5px;
+    margin-top: 3px;
+
+    img {
+      width: 25px; // ✅ Smallest size
+      height: auto;
+    }
+  }
+
+  .bottom-bar {
+    text-align: center;
+    border-top: 1px solid #444;
+    margin-top: 5px;
+    padding-top: 5px; // ✅ Compact spacing
+    font-size: 10px; // ✅ Ultra compact text
+    color: #bbb;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    text-align: center;
+
+    .social-icons {
+      justify-content: center;
+    }
+
+    .payment-icons {
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow p-4 w-100" style="max-width: 400px;">
+        
+        <!-- Heading: Dynamic Title -->
+        <h2 class="text-center mb-3">
+            {{ isEdit ? 'Update Brand' : 'Add New Brand' }}
+        </h2>
+
+        <form>
+            <!-- Name Input Field (Angular Material) -->
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" [(ngModel)]="name" name="name">
+            </mat-form-field>
+
+            <!-- Submit Button (Angular Material + Bootstrap) -->
+            <div class="text-center mt-3">
+                <!-- If Edit Mode: Show Update Button -->
+                <button *ngIf="isEdit" mat-raised-button color="primary" class="btn btn-primary px-4" [disabled]="!name" (click)="update()">
+                    Update
+                </button>
+
+                <!-- If Not Edit Mode: Show Add Button -->
+                <button *ngIf="!isEdit" mat-raised-button color="primary" class="btn btn-primary px-4" (click)="add()">
+                    Add
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

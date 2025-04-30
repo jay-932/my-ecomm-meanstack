@@ -1,0 +1,126 @@
+.product-card {
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+  .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+  }
+
+  .product-details {
+      padding: 10px;
+      text-align: center;
+
+      .product-title {
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+      }
+
+      .product-description {
+          font-size: 14px;
+          color: #666;
+      }
+
+      .price-section {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 5px;
+
+          .original-price {
+              text-decoration: line-through;
+              color: #999;
+              margin-right: 8px;
+          }
+
+          .discount-text {
+              color: red;
+              font-weight: bold;
+              margin-right: 8px;
+          }
+
+          .discounted-price {
+              color: green;
+              font-weight: bold;
+          }
+      }
+
+      .buttons-container {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 10px;
+
+          .icon-button {
+              background-color: #f8f8f8;
+              color: #333;
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: all 0.3s ease-in-out;
+
+              &:hover {
+                  background-color: #ddd;
+              }
+          }
+
+          .favorite-btn {
+              color: red;
+          }
+
+          .cart-btn {
+              color: blue;
+          }
+      }
+  }
+}
+
+.product-image-container {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+  }
+  
+  .product-image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  
+
+  .view-details-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #1976d2;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #125ea8;
+    }
+  }
+
+  
+

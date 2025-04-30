@@ -1,0 +1,212 @@
+.header {
+  background: #E3F2FD; // ✅ हल्का ब्लू बैकग्राउंड
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000; // ✅ ब्लैक टेक्स्ट
+    }
+
+    .search-bar input {
+      width: 280px;
+      height: 38px;
+      font-size: 14px;
+    }
+
+   
+  }
+
+  .category-menu {
+    background: #bbfbc8; // ✅ थोड़ा गहरा ब्लू बॉटम सेक्शन के लिए
+    padding: 0.5rem;
+
+    ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 0 1rem;
+        cursor: pointer;
+
+        a {
+          color: #000; // ✅ ब्लैक टेक्स्ट
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.3s ease-in-out;
+
+          &:hover {
+            color: #1565C0; // ✅ गहरा ब्लू Hover Effect
+          }
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  cursor: pointer; // ✅ Ensures pointer cursor
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+.auth-links {
+  display: flex;
+  gap: 12px; /* Space between links */
+  align-items: center;
+}
+
+.separator {
+  color: #777; /* Light grey separator */
+  font-weight: bold;
+}
+
+
+
+.search-bar {
+  position: relative;
+
+  .search-suggestions {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+          background: #f0f0f0;
+        }
+      }
+    }
+  }
+}
+
+/* Profile Section */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+}
+
+/* Admin/User Name */
+.profile span {
+  cursor: pointer;
+  color: #222; /* Dark color for light backgrounds */
+  transition: 0.3s;
+}
+
+.profile span:hover {
+  color: #ffcc00;
+}
+
+/* Icons Styling */
+.icon-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.wishlist-icon {
+  color: red;
+  font-size: 24px;
+  transition: 0.3s;
+}
+
+.cart-icon {
+  color: #444; /* Dark grey to contrast on light backgrounds */
+  font-size: 24px;
+  transition: 0.3s;
+}
+
+.orders-link {
+  color: #222; /* Dark color for readability */
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.orders-link:hover,
+.icon-link:hover .wishlist-icon,
+.icon-link:hover .cart-icon {
+  transform: scale(1.1);
+  color: #ffcc00;
+}
+
+/* Logout Button */
+.logout-btn {
+  color: #222;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  color: #ff4444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .icon-link,
+  .orders-link,
+  .logout-btn {
+    font-size: 14px;
+  }
+
+  .wishlist-icon,
+  .cart-icon {
+    font-size: 20px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .profile span,
+  .orders-link,
+  .logout-btn {
+    color: white; /* White text for dark mode */
+  }
+
+  .cart-icon {
+    color: white;
+  }
+
+  .orders-link:hover,
+  .logout-btn:hover {
+    color: #ffcc00;
+  }
+}

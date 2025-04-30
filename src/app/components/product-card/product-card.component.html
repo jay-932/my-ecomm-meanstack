@@ -1,0 +1,41 @@
+<div class="product-card">
+    <!-- Product Image -->
+    <div class="product-image-container">
+      <img [src]="product.images[0]" alt="Product Image" class="product-image" />
+    </div>
+  
+    <!-- Product Details -->
+    <div class="product-details">
+      <h6 class="product-title">{{ product.name }}</h6>
+      <p class="product-description">{{ product.shortDescription }}</p>
+  
+      <!-- Price Section -->
+      <div class="price-section">
+        <span class="original-price">₹{{ product.price }}</span>
+        <span class="discount-text">{{ product.discount }}% OFF</span>
+        <span class="discounted-price">₹{{ SellingPrice }}</span>
+      </div>
+  
+      <!-- Buttons Section -->
+      <div class="buttons-container">
+        <!-- Wishlist Button -->
+        <button mat-fab class="icon-button favorite-btn" (click)="onWishlistClick($event, product)" aria-label="Add to Wishlist">
+          <mat-icon>{{ isInWishlist(product) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </button>
+  
+        <!-- Cart Button -->
+        <button mat-fab class="icon-button cart-btn" (click)="addToCart($event, product)" aria-label="Add to Cart">
+          <mat-icon>
+            {{ isProductInCart(product._id!) ? 'remove_shopping_cart' : 'add_shopping_cart' }}
+          </mat-icon>
+        </button>
+  
+        <!-- Buy Now Button -->
+        <button class="btn btn-primary mt-2" (click)="openBuyNowModal(product)">Buy Now</button>
+      </div>
+  
+      <!-- View Details Link -->
+      <a [routerLink]="'/product/' + product._id" class="view-details-btn">View Details</a>
+    </div>
+  </div>
+  

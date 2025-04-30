@@ -1,0 +1,38 @@
+/* Smooth container transition */
+.container {
+  background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+  padding: 2rem;
+}
+
+/* Material + Bootstrap harmony */
+.form-container {
+  background-color: white;
+  border-radius: 1.5rem;
+}
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+/* Make radio inputs more clean */
+.form-check-input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Make radio labels align nicely */
+.form-check-label {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Buttons and links */
+button[mat-raised-button] {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

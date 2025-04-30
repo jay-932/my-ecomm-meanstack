@@ -1,0 +1,143 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">📦 All Customer Orders</h2>
+
+  <div *ngIf="orders.length > 0; else noOrders">
+    <div class="row">
+      <div class="col-md-12">
+        <div
+          class="card shadow-sm p-3 mb-4 border-0 rounded-3"
+          *ngFor="let order of orders; let i = index"
+        >
+          <!-- Header -->
+          <div class="bg-light p-3 rounded">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-md-start text-center mb-2 mb-md-0">
+                <h3 class="text-secondary mb-1">
+                  Order ID: <span class="text-dark">{{ order._id }}</span>
+                </h3>
+                <p class="text-muted mb-0">
+                  🕒 <strong>{{ order.date | date: 'medium' }}</strong>
+                </p>
+              </div>
+
+              <div class="col-md-4 d-flex justify-content-center mb-2 mb-md-0">
+                <span
+                  class="badge px-4 py-2 fs-6"
+                  [ngClass]="{
+                    'bg-success': order.status === 'Dispatched',
+                    'bg-primary': order.status === 'Shipped',
+                    'bg-info text-dark': order.status === 'Delivered',
+                    'bg-danger': order.status === 'Cancelled'
+                  }"
+                >
+                  🏷 Order Status: {{ order.status }}
+                </span>
+              </div>
+
+              <div class="col-md-4 text-md-end text-center mt-2 mt-md-0">
+                <h3 class="mb-1 text-primary">📍 Shipping Address</h3>
+                <p class="mb-0"><strong>{{ order.address.address1 }}</strong></p>
+                <p class="mb-0">{{ order.address.city }}, {{ order.address.pincode }}</p>
+              </div>
+            </div>
+          </div>
+         <!-- Centered Payment Badge -->
+         <div class="text-center mb-3">
+          <span class="badge bg-dark-subtle text-dark fs-6 px-4 py-2 rounded-pill">
+            Payment: 
+            <ng-container [ngSwitch]="order.paymentType">
+              <span *ngSwitchCase="'cash'">💵 Cash on Delivery</span>
+              <span *ngSwitchCase="'cod'">💵 Cash on Delivery</span>
+              <span *ngSwitchCase="'upi'">📱 UPI</span>
+              <span *ngSwitchCase="'online'">💳 Online Payment</span>
+              <span *ngSwitchDefault>❓ Unknown</span>
+            </ng-container>
+          </span>
+        </div>
+
+          <!-- Status Controls -->
+          <div class="text-center mt-3" *ngIf="order.status !== 'Cancelled'">
+            <mat-button-toggle-group
+              [value]="order.status"
+              name="status"
+              (change)="statusChanged($event, order)"
+            >
+              <mat-button-toggle value="Dispatched">🚚 Dispatched</mat-button-toggle>
+              <mat-button-toggle value="Shipped">📦 Shipped</mat-button-toggle>
+              <mat-button-toggle value="Delivered">✅ Delivered</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <button
+              class="btn btn-sm btn-outline-danger ms-3"
+              (click)="cancelOrder(order._id!)"
+            >
+               Cancel Order
+            </button>
+          </div>
+
+          <!-- Cancelled Section -->
+          <div *ngIf="order.status === 'Cancelled'" class="mt-2 text-danger text-center">
+            <strong>Reason:</strong> {{ order.cancelReason || 'No reason provided' }}
+            <div class="mt-2">
+              <button
+                class="btn btn-sm btn-danger"
+                (click)="deleteOrder(order._id!)"
+              >
+                🗑 Delete Order Permanently
+              </button>
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div class="card-body">
+            <h3 class="text-primary">Order #{{ i + 1 }}</h3>
+            <p class="text-muted">Total Items: <strong>{{ order.items.length }}</strong></p>
+
+            <div class="row mt-3" *ngFor="let item of order.items">
+              <div class="col-md-3 col-4 text-center">
+                <img
+                  [src]="item.product.images[0]"
+                  alt="Product Image"
+                  class="img-fluid rounded shadow-sm"
+                  style="max-height: 100px"
+                />
+              </div>
+              <div class="col-md-6 col-8">
+                <h3 class="mb-1">{{ item.product.name }}</h3>
+                <p class="text-muted mb-1">
+                  <span class="text-decoration-line-through text-danger">₹{{ item.product.price }}</span>
+                  <strong class="text-success ms-2">₹{{ getSellingPrice(item.product) }}</strong>
+                  <span class="badge bg-warning text-dark ms-2">{{ item.product.discount }}% OFF</span>
+                </p>
+                <p class="mb-0">🛒 Quantity: <strong>{{ item.quantity }}</strong></p>
+              </div>
+              <div class="col-md-3 text-end mt-2 mt-md-0">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteItem(order._id!, item.product._id)"
+                >
+                  🗑 Delete Item
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Orders Message -->
+  <ng-template #noOrders>
+    <div class="text-center p-5">
+      <h4>No Orders Found! 📦</h4>
+      <p class="text-muted">Looks like no one has placed any orders yet.</p>
+    </div>
+  </ng-template>
+
+  <!-- Back Button -->
+  <div class="text-center mt-5">
+    <a [routerLink]="'/'" class="btn btn-outline-primary">
+      🏠 Back to Home
+    </a>
+  </div>
+</div>

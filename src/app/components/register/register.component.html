@@ -1,0 +1,46 @@
+<div class="container min-vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class="card shadow-lg p-4 form-container border-0 rounded-4" style="width: 100%; max-width: 420px;">
+    <h2 class="text-center mb-4 text-primary fw-bold">Create Your Account</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="d-grid gap-3">
+      
+      <!-- 👤 Name -->
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Name</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput formControlName="name" type="text" placeholder="Enter your full name" autocomplete="off">
+      </mat-form-field>
+
+      <!-- 📧 Email -->
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Email</mat-label>
+        <mat-icon matPrefix>email</mat-icon>
+        <input matInput formControlName="email" type="email" placeholder="Enter your email" autocomplete="off">
+      </mat-form-field>
+
+      <!-- 🔒 Password -->
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" 
+               placeholder="Create a password" autocomplete="new-password">
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- 🚀 Register Button -->
+      <button mat-raised-button color="primary" class="rounded-3 py-2" [disabled]="registerForm.invalid">
+        Register
+      </button>
+
+      <!-- 🔗 Login Link -->
+      <div class="text-center mt-3 small text-muted">
+        <p>Already registered? 
+          <a (click)="goToLogin()" class="text-decoration-none fw-semibold text-primary cursor-pointer" style="cursor: pointer;">
+            Login here
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

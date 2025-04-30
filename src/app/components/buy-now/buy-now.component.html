@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Buy {{ product.name }}</h2>
+
+<mat-dialog-content>
+  <p><strong>Select Payment Method:</strong></p>
+
+  <mat-radio-group [(ngModel)]="selectedMethod" class="payment-options">
+    <mat-radio-button value="cod">Cash on Delivery</mat-radio-button>
+    <mat-radio-button value="online">UPI / Card Payment</mat-radio-button>
+  </mat-radio-group>
+
+  <div class="address-form mt-3">
+    <label>Address Line:</label>
+    <input type="text" [(ngModel)]="address.line1" class="form-control" required />
+
+    <label>City:</label>
+    <input type="text" [(ngModel)]="address.city" class="form-control" required />
+
+    <label>ZIP Code:</label>
+    <input type="text" [(ngModel)]="address.zip" class="form-control" required />
+  </div>
+
+  <div *ngIf="selectedMethod === 'online'" class="online-payment-section mt-3">
+    <p>Scan the QR code or use UPI/Card:</p>
+
+    <button mat-raised-button color="accent" (click)="openUpiIntent()">
+      Pay with UPI App
+    </button>
+
+    <button mat-stroked-button color="primary" class="ml-2" (click)="launchRazorpay()">
+      Pay with Card / Netbanking
+    </button>
+
+    <div class="upi-info mt-2">
+      <span class="upi-id clickable" (click)="copyUpiId()">
+        UPI ID: <strong>pay&#64;upi</strong>
+      </span>
+      <span class="copied-msg" *ngIf="upiCopied">✔ Copied!</span>
+    </div>
+
+    <img 
+      [src]="'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodedUpiLink" 
+      alt="QR Code" 
+      width="200" 
+      height="200" 
+      class="qr-image mt-2" />
+  </div>
+
+  <div *ngIf="paymentDone" class="text-success mt-3">
+    ✅ Payment Successful! Redirecting...
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="confirmPayment()">Pay Now</button>
+</mat-dialog-actions>
