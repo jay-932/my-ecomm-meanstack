@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,RouterModule } from '@angular/router';
 
 import { Order } from '../../types/order';
 import { Product } from '../../types/product';
@@ -10,7 +10,7 @@ import { OrderService } from '../../services/order.service';
 @Component({
   selector: 'app-customer-orders',
   standalone: true,
-  imports: [CommonModule, DatePipe, FormsModule],
+  imports: [CommonModule, DatePipe, FormsModule,RouterModule],
   templateUrl: './customer-orders.component.html',
   styleUrls: ['./customer-orders.component.scss'],
 })

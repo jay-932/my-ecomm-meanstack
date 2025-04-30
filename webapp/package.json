@@ -22,7 +22,9 @@
     "@angular/router": "^19.2.0-next.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "material-icons": "^1.13.14",
     "ngx-owl-carousel-o": "^19.0.0",
+    "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

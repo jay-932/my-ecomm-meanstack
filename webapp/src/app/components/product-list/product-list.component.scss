@@ -55,3 +55,9 @@
     }
   }
   
+  .category-menu{
+    color: #000; // ✅ ब्लैक टेक्स्ट
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+  }

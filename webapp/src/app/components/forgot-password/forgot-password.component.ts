@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,56 +23,80 @@ import { RouterModule } from '@angular/router';
   ],
   templateUrl: './forgot-password.component.html'
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnDestroy {
+  form!: FormGroup;
   message = '';
   error = '';
   previewLink = '';
-  form!: FormGroup;
-  showResend = false;
   countdown = 60;
-  intervalId: any;
+  showResend = false;
+  private intervalId: any = null;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) {
+  constructor(
+    private auth: AuthService,
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.toastr.warning('Please enter a valid email.');
+      return;
+    }
 
     this.message = '';
     this.error = '';
     this.previewLink = '';
     this.showResend = false;
     this.countdown = 60;
-    clearInterval(this.intervalId);
+
+    // ✅ Make sure any previous timer is cleared before starting new one
+    this.clearTimer();
 
     this.auth.forgotPassword(this.form.value.email!).subscribe({
       next: (res: any) => {
         this.message = res.message;
         this.previewLink = res.previewLink || '';
+        this.toastr.success(res.message);
         this.startCountdown();
       },
       error: err => {
-        this.error = err.error?.error || 'Something went wrong';
+        const errorMsg = err.error?.error || 'Something went wrong';
+        this.toastr.error(errorMsg);
       }
     });
   }
 
   startCountdown() {
-    this.intervalId = setInterval(() => {
-      this.countdown--;
+    this.clearTimer(); // ✅ Extra safe
 
-      if (this.countdown === 0) {
-        clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--;
+      } else {
+        this.clearTimer();
         this.previewLink = '';
         this.showResend = true;
       }
-    }, 1000);
+    }, 1000); // ✅ Runs exactly once per second
   }
 
   resendLink() {
     this.onSubmit();
+  }
+
+  clearTimer() {
+    if (this.intervalId !== null) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.clearTimer(); // ✅ Prevent memory leaks
   }
 }

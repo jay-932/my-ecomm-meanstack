@@ -1,16 +1,24 @@
 <header class="header">
   <!-- Top Section: Logo, Search Bar, Profile Link -->
   <div class="header-top">
-    <div class="logo" routerLink="/">My E-Commerce-Website (Jay Singh)</div>
+    <div class="logo fw-bold text-primary fs-4" routerLink="/" style="cursor: pointer;">
+      My E-Commerce • Jay Singh
+    </div>
 
-    <div class="search-bar">
+    <div class="search-bar d-flex align-items-center position-relative">
       <input 
         type="text" 
+        class="form-control rounded-pill px-4" 
         placeholder="Search products..." 
         [(ngModel)]="searchQuery" 
         (keyup.enter)="onSearch($event)" 
       />
-      <mat-icon class="search-icon" (click)="onSearch()">search</mat-icon>
+      <mat-icon 
+        class="search-icon position-absolute end-0 me-3 text-muted" 
+        style="top: 50%; transform: translateY(-50%); cursor: pointer;" 
+        (click)="onSearch()">
+        search
+      </mat-icon>
     </div>
 
     <div class="profile">
@@ -37,24 +45,23 @@
 
       <!-- Orders Link -->
       <ng-container *ngIf="authService.isLoggedIn">
-        <a routerLink="/orders" class="orders-link">Orders</a>
+        <a routerLink="/orders" class="text-decoration-none fw-medium text-primary">Orders</a>
       </ng-container>
     }
 
       <!-- Login/Logout -->
-      <ng-container *ngIf="authService.isLoggedIn; else loggedOut">
-        <a (click)="logout()" class="logout-btn">Logout</a>
-      </ng-container>
-
-      <ng-template #loggedOut>
-        <div class="auth-links">
-          <a routerLink="/login">Log In</a>
-          <span class="separator">|</span>
-          <a routerLink="/register">Register</a>
-        </div>
-      </ng-template>
-    </div>
+ <!-- 🔐 Auth Buttons -->
+ <ng-container *ngIf="authService.isLoggedIn; else loggedOut">
+  <a (click)="logout()" class="btn btn-outline-danger btn-sm">Logout</a>
+</ng-container>
+<ng-template #loggedOut>
+  <div class="auth-links d-flex gap-2">
+    <a routerLink="/login" class="btn btn-outline-primary btn-sm">Login</a>
+    <a routerLink="/register" class="btn btn-outline-success btn-sm">Register</a>
   </div>
+</ng-template>
+</div>
+</div>
 
   <!-- Bottom Section: Category List -->
   <nav class="category-menu">

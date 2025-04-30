@@ -14,21 +14,10 @@
       color: #000; // ✅ ब्लैक टेक्स्ट
     }
 
-    .search-bar {
-      position: relative;
-      input {
-        padding: 0.5rem 2rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        color: #000; // ✅ Text Black
-      }
-
-      .search-icon {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    .search-bar input {
+      width: 280px;
+      height: 38px;
+      font-size: 14px;
     }
 
    

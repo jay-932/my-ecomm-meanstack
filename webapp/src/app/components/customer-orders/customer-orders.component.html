@@ -6,7 +6,7 @@
   <!-- Header Section -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
-      <h6 class="mb-1 text-muted">Order ID: <span class="text-dark fw-semibold">{{ order._id }}</span></h6>
+      <h3 class="mb-1 text-muted">Order ID: <span class="text-dark fw-semibold">{{ order._id }}</span></h3>
       <p class="mb-0 text-muted">Date: <strong>{{ order.date | date: 'medium' }}</strong></p>
     </div>
     <span class="badge bg-info text-dark px-3 py-2">
@@ -17,8 +17,7 @@
 
   </div>
 
-  <!-- Payment Type -->
- <!-- Payment Type -->
+ 
 <!-- Payment Type -->
 <div class="text-center mb-3">
   <span class="badge bg-dark-subtle text-dark fs-6 px-4 py-2 rounded-pill">
@@ -37,7 +36,7 @@
 
   <!-- Address -->
   <div class="bg-light p-3 rounded mb-3">
-    <h6 class="text-primary mb-2">📍 Shipping Address</h6>
+    <h3 class="text-primary mb-2">📍 Shipping Address</h3>
     <div *ngIf="editingAddressId !== order._id">
       <p class="mb-2">{{ order.address.address1 }}, {{ order.address.city }} - {{ order.address.pincode }}</p>
       <button class="btn btn-sm btn-outline-primary" (click)="editAddress(order._id!)">
@@ -58,7 +57,7 @@
   </div>
 
   <!-- Order Info -->
-  <h5 class="text-primary">🛒 Order #{{ i + 1 }}</h5>
+  <h3 class="text-primary">🛒 Order #{{ i + 1 }}</h3>
   <p class="text-muted">Total Items: {{ order.items.length }}</p>
 
   <!-- Items -->
@@ -68,7 +67,7 @@
         <img [src]="item.product.images[0]" alt="Product Image" class="img-fluid rounded shadow-sm">
       </div>
       <div class="col-md-9">
-        <h5 class="fw-semibold">{{ item.product.name }}</h5>
+        <h3 class="fw-semibold">{{ item.product.name }}</h3>
         <p class="text-muted mb-1">
           <span class="text-decoration-line-through text-danger">₹{{ item.product.price }}</span>
           <strong class="text-success ms-2">₹{{ getSellingPrice(item.product) }}</strong>
@@ -81,7 +80,7 @@
 
   <!-- Cancel Section -->
   <div *ngIf="isPending(order.status)" class="mt-4">
-    <button class="btn btn-danger" (click)="confirmCancel(order._id!)">❌ Cancel Order</button>
+    <button class="btn btn-danger" (click)="confirmCancel(order._id!)"> Cancel Order</button>
 
     <div *ngIf="cancelingOrderId === order._id" class="mt-3">
       <textarea class="form-control" [(ngModel)]="cancelReason" rows="2" placeholder="Enter cancellation reason..."></textarea>
